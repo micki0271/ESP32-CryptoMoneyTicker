@@ -36,6 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <PrintUtils.h>
 #include <Bitmaps.h>
 #include <BoardConfig.hpp>
+#include <OtaHandler.hpp>
 
 Adafruit_ILI9341 tft =
     Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
@@ -105,6 +106,8 @@ void setup() {
   tft.println("IP address: ");
   tft.println(WiFi.localIP());
 
+  InitializeOTA();
+
   delay(1500);
   tft.fillScreen(ILI9341_BLACK); // Clear Screen
   tft.setTextColor(0x0BBF);
@@ -121,6 +124,8 @@ void setup() {
 }
 
 void loop() {
+
+  ArduinoOTA.handle();
 
   bool refresh = false;
 
@@ -156,14 +161,12 @@ void loop() {
 
   unsigned long currentMillis = millis();
 
-  if( currentMillis - progressTimestamp >= 2000 )
+  if( currentMillis - progressTimestamp >= 250 )
   {
     progressTimestamp = currentMillis;
-    double progress = (double)(currentMillis - previousMillis);
-    progress /= 60000.0 ;
-    progress *= 240;
-    Serial.println( progress );
-    tft.drawFastHLine( 0, 319, (int)progress, ILI9341_WHITE );
+    int progress = (int)(currentMillis - previousMillis);
+    progress /= 250.0 ;
+    tft.drawPixel( progress, 319,  ILI9341_WHITE );
   }
   
   if (currentMillis - previousMillis >= interval || refresh == true) {
