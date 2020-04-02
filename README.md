@@ -1,5 +1,9 @@
 # ESP32-CryptoMoneyTicker
 
+## The coinmarketcap /v1/ticker API ist deprecated
+Find a new version (mostly rewriten) at [https://github.com/thorsten-l/ESP32-CryptoMoneyTicker2](https://github.com/thorsten-l/ESP32-CryptoMoneyTicker2)
+
+## IDE
 PlatformIO version of the LilyGo TTGO-T4-DEMO
 
 Find the original repository here: [https://github.com/LilyGO/TTGO-T4-DEMO](https://github.com/LilyGO/TTGO-T4-DEMO)
